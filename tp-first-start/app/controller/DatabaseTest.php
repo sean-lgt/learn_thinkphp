@@ -171,4 +171,26 @@ class DatabaseTest extends BaseController
       return 'save失败';
     }
   }
+
+  public function updateUserInfo()
+  {
+    $data = [
+      // 'id'         =>  305,  // 如果信息已经包含主键，则可以忽略where
+      'password'   =>  '12345678',
+    ];
+
+    $updateRes = Db::name('user')->where('id', 305)->update($data);
+
+    // 如果想让一些字段执行SQL函数，可以使用exp()方法实现
+    // $updateRes = Db::name('user')->where('id', 305)->exp('email', 'UPPER(email)')->update($data);
+
+    // 如果要自增、自减某个字段，可以使用 inc/dec 方法，并支持自定义步长
+    // $updateRes = Db::name('user')->where('id', 305)->inc('price', 10)->dec('status', 2)->update();
+
+    if ($updateRes > 0) {
+      return 'update成功';
+    } else {
+      return 'update失败';
+    }
+  }
 }
