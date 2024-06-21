@@ -89,4 +89,86 @@ class DatabaseTest extends BaseController
 
     return json($data);
   }
+
+  public function addUserInfo()
+  {
+    $data = [
+      'username'   =>  '张三测试',
+      'password'   =>  '123456',
+      'gender'     =>  '女',
+      'email'      =>  '123456@qq.com',
+      'price'      =>  90,
+      'details'    =>  '123'
+    ];
+
+    // strict(false)->insert($data) 可以强制新增并忽略不存在的字段
+    $addResult = Db::name('user')->insert($data);
+    // replace 如果主键存在则修改，否则新增
+    // insertGetId() 新增数据成功后返回当前id
+    if ($addResult === 1) {
+      return '成功';
+    } else {
+      return '失败';
+    }
+  }
+
+  public function addAllUserInfo()
+  {
+    $allData = [
+      [
+        'username'   =>  '张三测试001',
+        'password'   =>  '123456',
+        'gender'     =>  '女',
+        'email'      =>  '123456@qq.com',
+        'price'      =>  90,
+        'details'    =>  '123'
+      ],
+      [
+        'username'   =>  '张三测试002',
+        'password'   =>  '123456',
+        'gender'     =>  '女',
+        'email'      =>  '123456@qq.com',
+        'price'      =>  90,
+        'details'    =>  '123'
+      ],
+      [
+        'username'   =>  '张三测试003',
+        'password'   =>  '123456',
+        'gender'     =>  '女',
+        'email'      =>  '123456@qq.com',
+        'price'      =>  90,
+        'details'    =>  '123'
+      ],
+    ];
+
+    $addResult = Db::name('user')->insertAll($allData);
+
+    if ($addResult > 0) {
+      return '批量成功';
+    } else {
+      return '批量失败';
+    }
+  }
+
+  public function saveUserInfo()
+  {
+    $data = [
+      // 'id'         =>  306,  // 新增或者修改由主键是否存在决定
+      'username'   =>  '李四测试306',
+      'password'   =>  '123456',
+      'gender'     =>  '女',
+      'email'      =>  '123456@qq.com',
+      'price'      =>  90,
+      'details'    =>  '123'
+    ];
+
+    // save 自行判断是新增或者修改  由是否有主键决定
+    $addResult = Db::name('user')->save($data);
+
+    if ($addResult === 1) {
+      return 'save成功';
+    } else {
+      return 'save失败';
+    }
+  }
 }
