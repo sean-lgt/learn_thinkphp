@@ -6,6 +6,7 @@ use app\BaseController;
 use think\facade\Db;
 
 use app\model\User;
+use think\db\Where;
 
 class DatabaseTest extends BaseController
 {
@@ -270,6 +271,45 @@ class DatabaseTest extends BaseController
   {
     // $queryList = Db::name('user')->where('id', 'exp', 'IN (24,26,76)')->select();
     $queryList = Db::name('user')->whereExp('id', 'IN (24,26,76)')->select();
+
+    return json($queryList);
+  }
+
+  // 时间查询 传统、快捷、固定、其他
+  public function timeQuery()
+  {
+    // 传统方式
+    // 可以使用 >、>=、<、<= 来筛选匹配的时间数据
+    // $queryList = Db::name('user')->where('create_time', '>', '2018-1-1')->select();
+    // 可以使用 between 来筛选匹配的时间数据
+    $queryList = Db::name('user')->where('create_time', 'between', ['2018-1-1', '2019-1-1'])->select();
+
+    // 快捷方式 whereTime/whereBetween/whereNotBetween、whereBetweenTime/whereNotBetweenTime
+    // $queryList = Db::name('user')->whereTime('create_time', '>', '2018-1-1')->select();
+    // $queryList = Db::name('user')->whereBetween('create_time', ['2018-1-1', '2019-1-4'])->select();
+    // $queryList = Db::name('user')->whereBetweenTime('create_time', '2018-1-1', '2019-1-4')->select();
+
+    // 固定查询
+    // 使用whereYear查询今年的数据、去年的数据、某一年的数据
+    // $queryList = Db::name('user')->whereYear('create_time')->select();
+    // $queryList = Db::name('user')->whereYear('create_time', 'last year')->select();
+    // $queryList = Db::name('user')->whereYear('create_time', '2019')->select();
+    // 使用whereMonth查询当月数据，上月数据、某一月数据
+    // $queryList = Db::name('user')->whereMonth('create_time')->select();
+    // $queryList = Db::name('user')->whereMonth('create_time', 'last month')->select();
+    // $queryList = Db::name('user')->whereMonth('create_time', '2019-10')->select();
+    // 使用whereDay查询当天数据、昨天数据、某一天数据
+    // $queryList = Db::name('user')->whereDay('create_time')->select();
+    // $queryList = Db::name('user')->whereDay('create_time','last day')->select();
+    // $queryList = Db::name('user')->whereDay('create_time', '2019-10-1')->select();
+
+    // 其他查询
+    // 查询指定时间额度数据，比如两个小时内的
+    // $queryList = Db::name('user')->whereTime('create_time', '2 hours')->select();
+    // 查询两个时间字段有效期的数据，比如会员开始到结束的期间
+    // $queryList = Db::name('user')->whereBetweenTimeField('create_time', 'end_time')->select();
+
+
 
     return json($queryList);
   }
