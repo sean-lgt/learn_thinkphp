@@ -214,4 +214,63 @@ class DatabaseTest extends BaseController
       return 'delete失败';
     }
   }
+
+  // 比较查询
+  public function compareQuery()
+  {
+    // 查询表达式支持大部分常用的SQL语句
+    // where('字段名','表达式','查询条件')
+    // $queryList = Db::name('user')->where('id', 311)->find();
+    // $queryList = Db::name('user')->where('id', '=', 311)->find();
+    // <>、>、>=、<、<=
+    $queryList = Db::name('user')->where('id', '<>', 311)->find();
+
+    return json($queryList);
+  }
+
+  // 区间查询
+  public function rangeQuery()
+  {
+    // 使用like表达式进行模糊查询
+    // $queryList = Db::name('user')->where('username', 'like', '张三%')->select();
+    // like表达式还可以支持数组传递进行模糊查询
+    // $queryList = Db::name('user')->where('username', 'like', ['李%', '张三%'], 'or')->select();
+
+    // like表达式具有两个快捷方式 whereLike 和 whereNotLike
+    // $queryList = Db::name('user')->whereLike('username', '张三%')->select();
+    // $queryList = Db::name('user')->whereNotLike('username', '张三%')->select();
+
+    // between表达式具有两个快捷方式 whereBetween 和 whereNotBetween
+    // $queryList = Db::name('user')->where('id', 'between', '19,25')->select();
+    // $queryList = Db::name('user')->where('id', 'between', [19, 25])->select();
+    // $queryList = Db::name('user')->whereBetween('id', [19, 25])->select();
+
+    $queryList = Db::name('user')->whereNotBetween('id', '19,25')->select();
+
+
+
+    return json($queryList);
+  }
+
+  // in具体查询
+  public function inQuery()
+  {
+    // $queryList = Db::name('user')->where('id', 'in', '24,26,76')->select();
+    // $queryList = Db::name('user')->where('id', 'in', [24, 26, 76])->select();
+
+    // $queryList = Db::name('user')->whereIn('id',  [24, 26, 76])->select();
+    $queryList = Db::name('user')->whereNotIn('id',  [24, 26, 76])->select();
+
+
+    return json($queryList);
+  }
+
+  // exp查询 可以自定义字段后的SQL语句
+  public function expQuery()
+  {
+    // $queryList = Db::name('user')->where('id', 'exp', 'IN (24,26,76)')->select();
+    $queryList = Db::name('user')->whereExp('id', 'IN (24,26,76)')->select();
+
+    return json($queryList);
+  }
 }
