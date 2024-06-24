@@ -154,7 +154,7 @@ class DatabaseTest extends BaseController
   {
     $data = [
       // 'id'         =>  306,  // 新增或者修改由主键是否存在决定
-      'username'   =>  '李四测试306',
+      'username'   =>  '李四11测试13',
       'password'   =>  '123456',
       'gender'     =>  '女',
       'email'      =>  '123456@qq.com',
@@ -181,7 +181,7 @@ class DatabaseTest extends BaseController
 
     $updateRes = Db::name('user')->where('id', 305)->update($data);
 
-    // 如果想让一些字段执行SQL函数，可以使用exp()方法实现
+    // 如果想让一些字段执行SQL函数，可以使用exp()方法实现  ::raw方法可以更简单的实现
     // $updateRes = Db::name('user')->where('id', 305)->exp('email', 'UPPER(email)')->update($data);
 
     // 如果要自增、自减某个字段，可以使用 inc/dec 方法，并支持自定义步长
@@ -191,6 +191,27 @@ class DatabaseTest extends BaseController
       return 'update成功';
     } else {
       return 'update失败';
+    }
+  }
+
+  public function deleteUser()
+  {
+    // 直接通过 delete 删除主键
+    // $delRes = Db::name('user')->delete(307);
+
+    // 根据主键，还可以删除多条记录
+    // $delRes = Db::name('user')->delete([308, 309]);
+
+    // 正常情况下，通过 where方法来删除
+    $delRes = Db::name('user')->where('id', 310)->delete();
+
+    // 通过 true 参数删除数据表所有数据
+    // $delRes = Db::name('user')->delete(true);
+
+    if ($delRes > 0) {
+      return 'delete成功';
+    } else {
+      return 'delete失败';
     }
   }
 }
