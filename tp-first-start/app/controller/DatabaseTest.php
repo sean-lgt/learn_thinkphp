@@ -313,4 +313,55 @@ class DatabaseTest extends BaseController
 
     return json($queryList);
   }
+
+  // 聚合查询
+  public function polymerizationQuery()
+  {
+    // 使用 count 方法，可以求出所查询数据的数量
+    // $queryRes = Db::name('user')->count();
+    // $queryRes = Db::name('user')->count('uid');
+
+    // 使用 max 方法，可以求出所查询数据的最大值 第二个参数强制转化数字默认true
+    // $queryRes = Db::name('user')->max('price');
+
+    // 使用 min 方法，可以求出所查询数据的最小值 也可以强制转化为数字
+    // $queryRes = Db::name('user')->min('price');
+
+    // 使用 avg 方法，可以求出所查询数据的平均值
+    // $queryRes = Db::name('user')->avg('price');
+
+    // 使用 sum 方法，可以求出所查询数据的总和
+    $queryRes = Db::name('user')->sum('price');
+
+
+
+    return json($queryRes);
+  }
+
+  // 子查询
+  public function subQuery()
+  {
+    // 使用 fetchSql 方法，可以设置不执行Sql,而是返回SQL语句
+    // $queryRes = Db::name('user')->fetchSql(true)->select();
+
+    // 使用 buildSql 方法, 也是返回 SQL 语句，不需要再执行 select，且有括号
+    // $queryRes = Db::name('user')->where('id', 27)->buildSql();
+
+    // 实现子查询
+    // 求出所有男的uid
+    // $subQuery = Db::name('two')->field('uid')->where('gender', '男')->buildSql(true);
+    // $queryRes = Db::name('one')->where('id', 'exp', 'IN' . $subQuery)->select();
+
+    // 使用闭包的方法实现
+    $queryRes = Db::name('one')->where('id', 'in', function ($query) {
+      $query->name('two')->field('uid')->where('gender', '男');
+    })->select();
+
+    // 原生查询 quert execute
+    // $queryRes = Db::query('select * from tp_user');
+
+    // return Db::getLastSql();
+
+    return json($queryRes);
+  }
 }
