@@ -464,4 +464,62 @@ class DatabaseTest extends BaseController
 
     return json($queryRes);
   }
+
+
+  // 高级查询
+  public function advancedQuery()
+  {
+
+    // OR| AND& 实现 where 条件的高级查询，where 支持多个连缀
+    $queryRes = Db::name('user')
+      ->where('username|email', 'like', '%悟%')
+      ->where('price&id', '>', 20)
+      ->select();
+
+
+    // 关联数组方式，可以再 where 进行多个字段查询
+    $queryRes = Db::name('user')->where([
+      ['id', '>', 20],
+      ['status', '=', 1],
+      ['price', '>=', 70],
+      ['email', 'like', '%163%']
+    ])->select();
+
+
+    // 条件字符串复杂组装，使用 exp，就可以使用 raw 方法
+    $queryRes = Db::name('user')->where([
+      ['status', '=', 1],
+      ['price', 'exp', Db::raw('>70')],
+    ])->select();
+
+
+    // 如果有多个 where, 并且是分离的 map,而 map本身有多个条件 [] 一个整体
+    $map = [
+      ['id', '>', 20],
+      ['email', 'like', '%163%'],
+      ['price', 'exp', Db::raw('>70')]
+    ];
+    $queryRes = Db::name('user')->where([$map])->where('status', 1)->select();
+
+
+    // 如果条件中有多次出现一个字段，并且需要 OR 来左右筛选，可以使用 whereOr
+    $map1 = [
+      ['email', 'like', '%163%'],
+      ['price', 'exp', Db::raw('>70')]
+    ];
+    $map2 = [
+      ['email', 'like', '%qq%'],
+      ['price', 'exp', Db::raw('>90')]
+    ];
+    $queryRes = Db::name('user')->whereOr([$map1, $map2])->select();
+
+
+    // 对于比较复杂或者不知道如何拼装 SQL 条件，则直接使用 whereRaw
+    $queryRes = Db::name('user')->whereRaw('(username LIKE "%悟%" AND email LIKE "%163%") OR (price > 70)')->select();
+
+
+    // return Db::getLastSql();
+
+    return json($queryRes);
+  }
 }
