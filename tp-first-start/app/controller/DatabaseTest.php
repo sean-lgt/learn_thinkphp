@@ -364,4 +364,104 @@ class DatabaseTest extends BaseController
 
     return json($queryRes);
   }
+
+  // 链式查询
+  public function chainQuery()
+  {
+    // where 条件
+    // 表达式查询 常用
+    $queryRes = Db::name('user')->where('id', '>', 30)->select();
+    // 关联数组查询，通过键值对进行匹配查询
+    $queryRes = Db::name('user')->where([
+      'gender'   =>  '男',
+      'price'    =>  '100'
+    ])->select();
+    // 索引数组查询，通过数组里的数组拼接方式查询
+    $queryRes = Db::name('user')->where([
+      ['gender', '=', '男'],
+      ['price', '=', '100']
+    ])->select();
+    // 复杂数组组装后，通过变量传递，增加可读性
+    $map[] = ['gender', '=', '男'];
+    $map[] = ['price', '=', '100'];
+    // halt($map);
+    $queryRes = Db::name('user')->where($map)->select();
+    // 字符串传值，简单粗暴的查询方式
+    $queryRes = Db::name('user')->where('gender="男" AND price IN (60,70,100)')->select();
+    // 如果SQL查询采用了预处理，也能支持
+    $queryRes = Db::name('user')->whereRaw('id=:id', ['id' => 27])->select();
+
+
+    // field 条件
+    // 使用 field方法，可以指定要查询的字段
+    $queryRes = Db::name('user')->field('id, username, email')->select();
+    $queryRes = Db::name('user')->field(['id', 'username', 'email'])->select();
+    // 使用 field 方法，给指定的字段设置别名
+    $queryRes = Db::name('user')->field('id,username as name')->select();
+    $queryRes = Db::name('user')->field(['id', 'username' => 'name'])->select();
+    // 使用 fieldRaw 方法，可以直接给字段设置 MySQL 函数
+    // $queryRes = Db::name('user')->fieldRaw('id,SUM(price)')->select();
+    // 使用 field(true)布尔参数,可以显示显示所有字段
+    $queryRes = Db::name('user')->field(true)->select();
+    // 使用 withoutField 方法可以将某些字段排除，屏蔽
+    $queryRes = Db::name('user')->withoutField('id')->select();
+    // 使用 field 方法在新增时，可以校验字段的合法性
+    // $queryRes = Db::name('user')->field('username,email')->insert($data);
+
+
+
+    // alias 
+    // 使用 alias 方法可以给数据库起一个别名
+    $queryRes = Db::name('user')->alias('a')->select();
+
+
+    return json($queryRes);
+  }
+
+  // 链式查询 更多
+  public function chainMoreQuery()
+  {
+    // limit 限制返回条数
+    // 使用 limit 方法，限制获取输出数据的个数
+    $queryRes = Db::name('user')->limit(5)->select();
+    // 分页模式，即需要传递两个餐宿，比如从第三条开始显示5条
+    $queryRes = Db::name('user')->limit(2, 5)->select();
+    // 实现分页,需要严格计算每页显示的条数，然后从第几条开始
+    $queryRes = Db::name('user')->limit(5, 5)->select();
+
+
+    // page
+    // 使用 page 函数分页方法，优化了 limit 方法，无需计算分页条数
+    // 第一页
+    $queryRes = Db::name('user')->page(1, 5)->select();
+
+
+    // order
+    // 使用 order 方法，可以指定排序方法,没有指定第二参数则默认为 asc
+    $queryRes = Db::name('user')->order('id', 'desc')->select();
+    // 支持数组的方式，对多个字段进行排序
+    $queryRes = Db::name('user')->order(['id' => 'desc', 'create_time' => 'desc'])->select();
+    // 使用 orderRaw 方法，可以直接给排序字段设置 MySQL 函数
+    $queryRes = Db::name('user')->orderRaw('FIELD(username,"孙悟饭") DESC')->select();
+
+
+
+    // group
+    // 使用 group 方法，给性别不同的人进行 price 字段的综合统计
+    $queryRes = Db::name('user')->fieldRaw('gender,SUM(price) as total')->group('gender')->select();
+    // 也可以进行多字段分组统计
+    $queryRes = Db::name('user')->fieldRaw('gender,password,SUM(price) as total')->group('gender,password')->select();
+
+
+
+    // having
+    // 使用 group 的分组后，可以再使用 having 进行筛选
+    $queryRes = Db::name('user')->fieldRaw('gender,SUM(price) as total')
+      ->group('gender')
+      ->having('total > 720')
+      ->select();
+
+
+    return json($queryRes);
+  }
 }
