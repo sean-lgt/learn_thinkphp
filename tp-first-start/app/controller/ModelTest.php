@@ -165,7 +165,30 @@ class ModelTest extends BaseController
     // 使用 chunk 方法可以分批处理数据
     // 可以利用游标进行查询减少性能开销 cursor
 
+    // halt($testValue);
 
     return json($userInfo);
+  }
+
+  // 获取器的使用
+  public function getModelAttr()
+  {
+    $user = User::find(315);
+    // $statusName = $user->status;
+    // $statusName = $user->nothing;
+    // halt($user);
+    // echo($statusName);
+
+    // 获取原始数据
+    // $orginData = $user->getData();
+
+    // 使用 WithAttr 在控制器端实现动态获取器
+    // $user = User::withAttr('status', function ($value) {
+    //   $arr = [-1 => '删除', 0 => '禁用', 1 => '正常'];
+    //   return $arr[$value];
+    // })->select();
+
+
+    return json($user);
   }
 }
