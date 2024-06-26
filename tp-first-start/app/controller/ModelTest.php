@@ -129,4 +129,43 @@ class ModelTest extends BaseController
 
     return json('更新成功');
   }
+
+  // 查询用户
+  public function queryUser()
+  {
+    // 通过find方法
+    $userInfo = User::find(315);
+    // 也可以使用 where 方法进行条件筛选查询数据
+    $userInfo = User::where('username', '李白5555')->findOrEmpty();
+
+    // 可以使用 isEmpty 判断是否为空模型
+    // if ($userInfo->isEmpty()) {
+    //   return json('没有数据');
+    // }
+
+    // 使用 select 方法，查询多条指定id的字段
+    $userInfo = User::select([313, 315, 316]);
+    // foreach ($userInfo  as $key => $value) {
+    //   echo $value->username . "\n";
+    // }
+
+    // 模型方法可以使用 where 连缀查询，和数据库查询方式一样
+    $userInfo = User::where('status', 0)
+      ->limit(3)
+      ->order('id', 'desc')
+      ->select();
+
+    // 获取某个字段 value 或者某个列 column 的值
+    $testValue = User::where('id', 315)->value('email');
+    $testValue2 = User::whereIn('id', [315, 316, 306])->column('username', 'id');
+
+    // 支持动态查询 getBy**  **字段名
+    $emailValue = User::getByUsername('李白');
+
+    // 使用 chunk 方法可以分批处理数据
+    // 可以利用游标进行查询减少性能开销 cursor
+
+
+    return json($userInfo);
+  }
 }
