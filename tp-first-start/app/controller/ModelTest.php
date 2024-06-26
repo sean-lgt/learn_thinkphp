@@ -86,4 +86,47 @@ class ModelTest extends BaseController
 
     return json('删除成功');
   }
+
+  // 更新用户
+  public function updateUser()
+  {
+    // 使用 find 方法获取数据，然后通过 save 方法保存修改
+    $user = User::find(315);
+    $user->username  =  '李白315';
+    $user->email  =  '315@qq.com';
+    $user->save();
+
+    // 通过 where 方法结合 find 方法的查询条件获取数据，进行修改
+    $user = User::where('username', '李白315')->find();
+    $user->email  =  '3155@qq.com';
+
+    // Db::raw 可以执行 SQL 函数
+    $user->price  =  DB::raw('price+5');
+
+    // save只会更新变化的数据 在前端调用 force则会强制更新
+    // $user->force()->save();
+
+    // 通过 saveAll 方法可以批量修改数据
+
+    $user->save();
+
+    // 使用静态方法 update
+    // 参数，条件，更新的字段值
+
+    User::update([
+      'id'       =>  315,
+      'username' =>  '李白update'
+    ]);
+
+    User::update([
+      "username"  =>  "李白update*2"
+    ], ['id' => 315]);
+
+    User::update([
+      "username"  =>  "李白update*2"
+    ], ['id' => 315], ['username']);
+
+
+    return json('更新成功');
+  }
 }
