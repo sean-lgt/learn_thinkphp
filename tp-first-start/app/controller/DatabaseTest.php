@@ -522,4 +522,45 @@ class DatabaseTest extends BaseController
 
     return json($queryRes);
   }
+
+
+  // 事务处理
+  public function transactionHandler()
+  {
+    // 数据库的表引擎需要时 InnoDB 才可以使用事务
+    // 事务处理，需要执行多个 SQL 操作，数据是关联恒定的
+    // 如果成功一条查询，改变了数据，而后一条失败，则需要将前面的数据回滚
+
+    // 自动处理事务
+    // Db::transaction(function () {
+    //   Db::name('user')->where('id', 27)->save(['price' => Db::raw('price - 3')]);
+    //   Db::name('user1')->where('id', 27)->save(['price' => Db::raw('price + 3')]);
+    // });
+
+    // 手动处理，基本和原生处理类似，可以自行输出错误信息
+    // 启动事务
+    Db::startTrans();
+    try {
+      Db::name('user')->where('id', 27)->save(['price' => Db::raw('price - 3')]);
+      Db::name('user1')->where('id', 27)->save(['price' => Db::raw('price + 3')]);
+      Db::commit();
+    } catch (\Exception $e) {
+      echo '执行事务失败';
+      // 回滚事务
+      Db::rollback();
+    }
+  }
+
+  // 获取器
+  public function getGetter()
+  {
+    // 获取器的意思是 将数据的字段进行转化处理再进行操作
+    // 比如在获取数据列表的时候，将获取到的邮箱字段全部大写
+
+    $user = Db::name('user')->withAttr('email', function ($value, $data) {
+      return strtoupper($value);
+    })->select();
+
+    return json($user);
+  }
 }
