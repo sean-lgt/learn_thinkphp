@@ -56,6 +56,9 @@ return [
       'trigger_sql'     => env('app_debug', true),
       // 开启字段缓存
       'fields_cache'    => false,
+      // 自动写入时间戳字段 全局开启
+      // 'auto_timestamp'  => true,
+      // 'auto_timestamp'  => 'datetime', // 日期时间
     ],
 
     // 更多的数据库配置信息

@@ -16,6 +16,21 @@ class User extends Model
   // 设置表
   protected $table = 'tp_user';
 
+  // 模型开启自动时间戳
+  // protected $autoWriteTimestamp = true;
+  protected $autoWriteTimestamp = 'datetime'; // 日期时间格式
+
+  // 只读字段，修改时无法修改
+  // protected $readonly = ['username', 'email'];
+
+  // 模型类型转化
+  // protected $type = [
+  //   'price'    =>  'integer'
+  // ];
+
+  // 废弃字段
+  // protected $disuse = ['create_time', 'update_time'];
+
   // 初始化 构造方法
   protected static function init()
   {
