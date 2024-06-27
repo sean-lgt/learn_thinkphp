@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\BaseController;
 use app\model\User;
+use app\model\Profile;
 use think\facade\Db;
 
 
@@ -243,5 +244,90 @@ class ModelTest extends BaseController
     ])->select();
 
     return json($queryRes);
+  }
+
+  // 关联模型
+  public function modelRelation()
+  {
+    $user = User::find(315);
+
+    // halt($user);
+
+    $user->profile;
+
+    // 反向关联
+    $profile = Profile::find(37);
+    $profile->user;
+    // echo $profile->user->username;
+
+    return json($profile);
+
+    return json($user);
+  }
+
+  // 模型更多关联 一对多 多条数据->数组
+  public function modelMoreRelation()
+  {
+    $user = User::find(315);
+    $user->profileMany;
+
+
+    return json($user);
+  }
+
+  // 关联预加载 减少性能消耗
+  // 不关联的情况下 循环会执行N+1次SQL 关联只需两次
+  public function modelRelationPreLoad()
+  {
+    $list = User::with(['profile'])->select([315, 316, 317]);
+
+    // 延迟载入 load
+
+    foreach ($list as $user) {
+      dump($user->profile->toArray());
+    }
+  }
+
+  // 关联统计
+  public function modelRelationCount()
+  {
+    // withMax withMin WithSum withAvg
+    $list = User::withCount('profile')->select([315, 316, 317]);
+    foreach ($list as $user) {
+      // 关联统计的输出采用 关联方法名 + _count
+      dump($user->profile_count);
+    }
+
+    // 关联输出
+    // hidden 可以隐藏字段
+    // visible 可以显示字段
+    // apend 追加额外字段
+  }
+
+  // 多对多关联
+  public function relationManyToMany()
+  {
+    // 一、查询
+    $user = User::find(315);
+    // // 获取这个用户所有角色
+    $roles = $user->roles;
+
+    // halt($roles);
+
+    // 新增 关联
+    // $user = User::find(315);
+    // $user->roles()->save([
+    //   'type' => '测试管理员'
+    // ]);
+    // 一般新增时通过中间关联表新增即可，即指定id
+    // $user->roles()->saveAll([5]);
+
+
+    // 删除
+    // $user = User::find(315);
+    // $user->roles()->detach(5);
+
+    return json('');
+    // return json($roles);
   }
 }

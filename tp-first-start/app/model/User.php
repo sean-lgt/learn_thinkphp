@@ -3,6 +3,7 @@
 namespace app\model;
 
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class User extends Model
 {
@@ -54,6 +55,10 @@ class User extends Model
 
   // 是否严格区分大小写
   // protected $strict = false;
+
+  // 开启软删除
+  // use SoftDelete;
+  // protected $deleteTime = 'delete_time'; // 指定软删除字段
 
 
   // 模型的获取器
@@ -118,5 +123,32 @@ class User extends Model
     if (isset($data['sort'])) {
       $query->order($data['sort']);
     }
+  }
+
+  // 触发事件方法 自动执行
+  protected static function onAfterRead($query)
+  {
+    // 事件触发时，自动给密码加密 
+    // echo '模型中执行了事件';
+  }
+
+  // 模型关联表 主表关联附表
+  public function profile()
+  {
+    // hasOne 表示一对一管理 参数1为附表 参数二为 外键
+    return $this->hasOne(Profile::class, 'user_id');
+  }
+
+  // 模型关联 一对多 多条数据数组
+  // 适合主表关联副表
+  public function profileMany()
+  {
+    return $this->hasMany(Profile::class, 'user_id', 'id');
+  }
+
+  // 多对多关联
+  public function roles()
+  {
+    return $this->belongsToMany(Role::class, Access::class);
   }
 }

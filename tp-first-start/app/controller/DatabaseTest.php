@@ -10,6 +10,15 @@ use think\db\Where;
 
 class DatabaseTest extends BaseController
 {
+
+  public function initialize()
+  {
+    // 数据库事件 可以监听做其他事情
+    Db::event('before_select', function ($data) {
+      // echo '执行了查询操作';
+    });
+  }
+
   public function index()
   {
     // 使用 table 方法需要手动增加前缀
