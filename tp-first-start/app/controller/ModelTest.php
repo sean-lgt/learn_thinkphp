@@ -191,4 +191,35 @@ class ModelTest extends BaseController
 
     return json($user);
   }
+
+  // 模型查询范围
+  public function scopeQuery()
+  {
+    $queryRes = User::scope('male')->select();
+    // 第二种写法
+    // $queryRes = User::male()->select();
+
+    // 携带参数查询
+    $queryRes = User::scope('email', '345')->select();
+    // $queryRes = User::email('345')->select();
+
+    // 多级查询
+    $queryRes = User::scope('email', '345')
+      ->scope('peice', 80)
+      ->select();
+
+    return json($queryRes);
+  }
+
+  // 模型搜索器
+  public function modelSearch()
+  {
+
+    $queryRes = User::withSearch(['email', 'create_time'], [
+      'email' => '345',
+      'create_time' => ['2016-07-01', '2019-06-01']
+    ])->select();
+
+    return json($queryRes);
+  }
 }

@@ -64,4 +64,40 @@ class User extends Model
     ];
     return $myGet[$data['status']];
   }
+
+  // 模型查询范围 前缀为 scope
+  // 在模型端创建一个封装的查询或写入方法，方便控制器端调用
+  public function scopeMale($query)
+  {
+    $query->where('gender', '男')->field('id,username,email')->limit(5);
+  }
+
+  // 模型查询范围 带参数
+  public function scopeEmail($query, $value)
+  {
+    $query->where('email', 'like', '%' . $value . '%');
+  }
+
+  public function scopePrice($query, $value)
+  {
+    $query->where('price', '>', $value);
+  }
+
+  // 模型搜索器
+  // 搜索器是用于封装字段（或搜索标识）的查询表达式，类似查询范围
+  // 一个搜索器对应模型的一个特殊方法，该方法为 public
+  // 方法的命名规范为 searchFieldAttr
+  public function searchEmailAttr($query, $value)
+  {
+    $query->where('email', 'like', $value . '%');
+  }
+
+  public function searchCreateTimeAttr($query, $value, $data)
+  {
+    $query->whereBetweenTime('create_time', $value[0], $value[1]);
+    // 第三个参数则是传递的所有值
+    if (isset($data['sort'])) {
+      $query->order($data['sort']);
+    }
+  }
 }
