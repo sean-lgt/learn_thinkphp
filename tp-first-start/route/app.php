@@ -11,7 +11,12 @@
 use think\facade\Route;
 
 Route::get('think', function () {
-    return 'hello,ThinkPHP6!';
+  return 'hello,ThinkPHP6!';
 });
 
 Route::get('hello/:name', 'index/hello');
+
+Route::get('routerTest/index', 'routerTest/index');
+// Route::get('routerTest/details/:id', 'routerTest/details');
+// 使用路由变量规则 id只能为数字 数组方式传递
+Route::get('routerTest/details/:id', 'routerTest/details')->pattern(['id' => '\d+']);
