@@ -17,7 +17,10 @@ class DatabaseTest extends BaseController
     // 获取数据库配置
     $config = Db::getConfig();
     // 使用 name 方法需要手动增加前缀
-    $userList = Db::name('user')->select();
+    // $userList = Db::name('user')->select();
+
+    // 字段中有json 则需要转化
+    $userList = Db::name('user')->json(['list'])->select();
     // 将数据集转换为数组
     //  $userList= Db::name('user')->find()->toArray();
     return json($userList);
@@ -165,6 +168,33 @@ class DatabaseTest extends BaseController
 
     // save 自行判断是新增或者修改  由是否有主键决定
     $addResult = Db::name('user')->save($data);
+
+    if ($addResult === 1) {
+      return 'save成功';
+    } else {
+      return 'save失败';
+    }
+  }
+
+  public function saveJsonUserInfo()
+  {
+    $data = [
+      // 'id'         =>  306,  // 新增或者修改由主键是否存在决定
+      'username'   =>  'wang11测试13',
+      'password'   =>  '123456',
+      'gender'     =>  '女',
+      'email'      =>  '123456@qq.com',
+      'price'      =>  90,
+      'list'       =>  [
+        'username'   => '张三',
+        'age'        =>  18
+      ],
+      'details'    =>  '123'
+    ];
+
+    // save 自行判断是新增或者修改  由是否有主键决定
+    // 需要说明哪个是 json 字段进行转化
+    $addResult = Db::name('user')->json(['list'])->save($data);
 
     if ($addResult === 1) {
       return 'save成功';

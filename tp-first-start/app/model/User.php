@@ -31,6 +31,9 @@ class User extends Model
   // 废弃字段
   // protected $disuse = ['create_time', 'update_time'];
 
+  // 设置 json 字段
+  protected $json = ['list'];
+
   // 初始化 构造方法
   protected static function init()
   {
@@ -51,6 +54,7 @@ class User extends Model
 
   // 是否严格区分大小写
   // protected $strict = false;
+
 
   // 模型的获取器
   // 获取器的作用是对模型实例的数据做出自动处理

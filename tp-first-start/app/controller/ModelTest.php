@@ -65,6 +65,28 @@ class ModelTest extends BaseController
     return json('新增成功');
   }
 
+  public function insertJsonUser()
+  {
+    $userModel = new User();
+
+    // 推荐写法 使用 create 静态方法来创建新增数据
+    // 第一个参数是新增数据，第二个是允许写入的字段，第三个是否为 replace 写入
+    $userModel::create([
+      'username' => '李白003',
+      'password' => '123456',
+      'gender' => '男',
+      'email' => '123456@qq.com',
+      'price' => 90,
+      'details' => '123',
+      'list'    => [
+        'username'   => '张三',
+        'age'        =>  188
+      ],
+    ], [], false);
+
+    return json('新增成功');
+  }
+
   // 删除用户
   public function deleteUser()
   {
