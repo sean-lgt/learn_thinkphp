@@ -15,4 +15,9 @@ class Blog extends BaseController
   {
     return 'test';
   }
+
+  public function details($id)
+  {
+    return 'details====' . $id;
+  }
 }
