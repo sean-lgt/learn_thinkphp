@@ -35,6 +35,9 @@ class User extends Model
   // 设置 json 字段
   protected $json = ['list'];
 
+  // 依赖注入
+  public $dependInjectList = 'Test';
+
   // 初始化 构造方法
   protected static function init()
   {

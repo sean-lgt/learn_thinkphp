@@ -74,6 +74,6 @@ Route::resource('blog', 'Blog');
 
 // 注解路由
 // 安装扩展，直接在 controller 目录中引入定义
-// 执行命令 composer require topthink/think-annotation
+// 执行命令 composer require topthink/think-annotation 1.1
 // URL 生成 
 // Route::buildUrl('地址',[参数...])
