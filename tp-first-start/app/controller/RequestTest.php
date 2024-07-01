@@ -101,5 +101,18 @@ class RequestTest extends BaseController
   }
 
   // 请求类型
+  public function requestMethod()
+  {
+    // 判断是否为 get 请求
+    $data['isGet'] = FacadeRequest::isGet();
+    // 判断是否为 post 请求
+    $data['isPost'] = FacadeRequest::isPost();
+    // 获取当前请求的类型
+    $data['method'] = FacadeRequest::method();
+    // 获取HTTP请求头信息
+    $data['header'] = FacadeRequest::header();
 
+
+    return json($data);
+  }
 }
