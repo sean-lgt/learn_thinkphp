@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66559480dea8532df6a457e4e313a236",
+    "content-hash": "5d861cce4e04fc67487c0e7b419f52e7",
     "packages": [
         {
             "name": "league/flysystem",
@@ -507,6 +507,72 @@
             "time": "2017-10-23T01:57:42+00:00"
         },
         {
+            "name": "symfony/class-loader",
+            "version": "v3.2.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/class-loader.git",
+                "reference": "e192d96b15fdd168bdb1c91001d26c93ba4af482"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/class-loader/zipball/e192d96b15fdd168bdb1c91001d26c93ba4af482",
+                "reference": "e192d96b15fdd168bdb1c91001d26c93ba4af482",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "symfony/finder": "~2.8|~3.0",
+                "symfony/polyfill-apcu": "~1.1"
+            },
+            "suggest": {
+                "symfony/polyfill-apcu": "For using ApcClassLoader on HHVM"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\ClassLoader\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ClassLoader Component",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/class-loader/tree/3.2"
+            },
+            "abandoned": true,
+            "time": "2017-06-01T21:00:24+00:00"
+        },
+        {
             "name": "topthink/framework",
             "version": "v6.1.4",
             "source": {
@@ -576,6 +642,66 @@
                 "source": "https://github.com/top-think/framework/tree/v6.1.4"
             },
             "time": "2023-07-11T15:16:03+00:00"
+        },
+        {
+            "name": "topthink/think-annotation",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-annotation.git",
+                "reference": "8295c0fa5338703da0c29695c563005108b97f4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-annotation/zipball/8295c0fa5338703da0c29695c563005108b97f4b",
+                "reference": "8295c0fa5338703da0c29695c563005108b97f4b",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "symfony/class-loader": "~3.2.0",
+                "topthink/framework": "^6.0"
+            },
+            "require-dev": {
+                "topthink/think-ide-helper": "v1.0"
+            },
+            "type": "library",
+            "extra": {
+                "think": {
+                    "services": [
+                        "think\\annotation\\Service"
+                    ],
+                    "config": {
+                        "annotation": "src/config.php"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "think\\annotation\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "description": "Annotation For ThinkPHP6",
+            "support": {
+                "issues": "https://github.com/top-think/think-annotation/issues",
+                "source": "https://github.com/top-think/think-annotation/tree/v2.0.1"
+            },
+            "time": "2021-05-14T15:01:47+00:00"
         },
         {
             "name": "topthink/think-filesystem",

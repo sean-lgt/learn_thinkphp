@@ -63,3 +63,17 @@ Route::group('group', function () {
 Route::group('group2', function () {
   Route::get('testgroup/:id', 'hello');
 })->prefix('Index');
+
+
+// 资源路由
+// 系统内置命令 php think make:controller Blog
+// 定义资源路由及名称
+Route::resource('blog', 'Blog');
+// 资源路由注册成功后，会自动提供以下方法
+// index、create、read、edit、save、update、delete
+
+// 注解路由
+// 安装扩展，直接在 controller 目录中引入定义
+// 执行命令 composer require topthink/think-annotation
+// URL 生成 
+// Route::buildUrl('地址',[参数...])
