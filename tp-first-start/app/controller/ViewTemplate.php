@@ -107,4 +107,14 @@ class ViewTemplate extends BaseController
 
     return View::fetch('index2');
   }
+
+  // 判断
+  public function outputJudge()
+  {
+    View::assign([
+      'number'   => 3,
+    ]);
+
+    return View::fetch('judge');
+  }
 }

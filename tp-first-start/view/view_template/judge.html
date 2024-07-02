@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>判断</title>
+</head>
+
+<body>
+  <p>switch 标签</p>
+  <div>
+    {switch number}
+    {case 1}1{/case}
+    {case 5}5{/case}
+    {case 6|7|8}6{/case}
+    {case 10}10{/case}
+    {default/}不存在
+    {/switch}
+  </div>
+  <p>switch 标签</p>
+  <div>
+    {if $number >= 5}
+    可以符合
+    {else/}
+    不符合
+    {/if}
+  </div>
+  <div>
+    {if $number >= 5}
+    可以符合
+    {elseif $number == 3}
+    符合3
+    {else/}
+    不符合
+    {/if}
+  </div>
+  <p>in/between 标签</p>
+  <div>{in name="$number" value="1,2,5,3"}存在{/in}</div>
+  <div>{between name="$number" value="1,2"}存在{/between}</div>
+</body>
+
+</html>
