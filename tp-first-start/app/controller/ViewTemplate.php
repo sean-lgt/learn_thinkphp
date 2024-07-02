@@ -117,4 +117,12 @@ class ViewTemplate extends BaseController
 
     return View::fetch('judge');
   }
+
+  // 包含文件输出
+  public function includeTemp()
+  {
+
+
+    return View::fetch('include');
+  }
 }
