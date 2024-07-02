@@ -10,6 +10,22 @@
 <body>
   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam est, voluptates, nulla maiores quae perferendis nostrum nobis sunt adipisci quasi quod molestiae dolor repellat, numquam tenetur non! Repellendus, fuga provident!
   <div>{$name}--{$age}岁</div>
+  <p>1</p>
+  <p>2.常规变量</p>
+  <div>{$data.key} === {$data.value}</div>
+  <div>{$obj->name} === {$obj->age}</div>
+  <div>{$obj->tempFn()}</div>
+  <div>{$obj::PI}</div>
+  <div>{$data.tes|default='默认值'}</div>
+  <p>3.系统变量</p>
+  <div>{$Request.get.id}</div>
+  <div>{$Request.host}</div>
+  <p>4.使用函数</p>
+  <div>{$password|md5}</div>
+  <div>{$time|date='Y-m-d'}</div>
+  <div>{$name|substr=0,2}</div>
+
+
 
 </body>
 
