@@ -5,6 +5,8 @@ namespace app\controller;
 use app\BaseController;
 use think\facade\View;
 
+use app\model\User;
+
 class ViewTemplate extends BaseController
 {
 
@@ -78,5 +80,31 @@ class ViewTemplate extends BaseController
   public function tempFn()
   {
     return 'temp 方法';
+  }
+
+  public function outputIndex2()
+  {
+
+    // 数组传递
+    $dataArr = [
+      'key'    =>  13,
+      'value'  =>  '测试'
+    ];
+
+    // 获取数据
+    $userList = User::select();
+
+
+    View::assign([
+      'name'   => 'sean',
+      'age'    => '18',
+      'data'   => $dataArr,
+      'password' => 123456,
+      'time'   => time(),
+      'obj'    => $this,
+      'userList' => $userList,
+    ]);
+
+    return View::fetch('index2');
   }
 }

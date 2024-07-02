@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index2</title>
+</head>
+
+<body>
+  <p>4.三元判断</p>
+  <div>{$data.key?'正确':'错误'}</div>
+  <p>5.模板循环标签</p>
+  <div>foreach 循环</div>
+  {foreach $userList as $key=>$obj}
+  <tr>
+    <td>{$key}/{$obj->id}</td>
+    <td>{$obj.username}</td>
+    <td>{$obj.gender}</td>
+  </tr>
+  {/foreach}
+  <div>volist 循环</div>
+  {volist name="userList" id="obj"}
+  <tr>
+    <td>{$key}/{$obj->id}</td>
+    <td>{$obj.username}</td>
+    <td>{$obj.gender}</td>
+  </tr>
+  {/volist}
+
+  <div>for 循环</div>
+  {for start="1" end="100"}
+  <span>{$i}、</span>
+  {/for}
+
+
+</body>
+
+</html>
