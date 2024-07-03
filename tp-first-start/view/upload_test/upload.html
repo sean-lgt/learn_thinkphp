@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上传</title>
+</head>
+
+<body>
+  <p>单图上传</p>
+  <form action="http://host.thinkphp.com/tp-first-start/public/index.php/uploadTest/upload" enctype="multipart/form-data" method="post">
+    <input type="file" name="image">
+    <input type="submit" value="确定">
+  </form>
+  <p></p>
+  <p></p>
+  <p>批量上传</p>
+  <form action="http://host.thinkphp.com/tp-first-start/public/index.php/uploadTest/uploadMore" enctype="multipart/form-data" method="post">
+    <input type="file" name="image[]">
+    <input type="file" name="image[]">
+    <input type="file" name="image[]">
+    <input type="submit" value="确定">
+  </form>
+  <p></p>
+  <p></p>
+  <p>上传校验</p>
+  <form action="http://host.thinkphp.com/tp-first-start/public/index.php/uploadTest/uploadValidate" enctype="multipart/form-data" method="post">
+    <input type="file" name="image">
+    <input type="submit" value="确定">
+  </form>
+</body>
+
+</html>
